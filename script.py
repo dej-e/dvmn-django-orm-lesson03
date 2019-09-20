@@ -46,8 +46,8 @@ def get_child(child_name):
     return Schoolkid.objects.get(full_name__contains=child_name)
 
 
-def fix_mark(child):
-    marks = Mark.objects.filter(schoolkid=child, points__in=[2, 3])
+def fix_mark(schoolkid):
+    marks = Mark.objects.filter(schoolkid=schoolkid, points__in=[2, 3])
     for mark in marks:
         mark.points = 5
         mark.save()
