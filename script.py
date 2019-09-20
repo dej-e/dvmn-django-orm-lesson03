@@ -1,4 +1,4 @@
-from datacenter.models import (
+from .models import (
     Schoolkid,
     Mark,
     Lesson,
