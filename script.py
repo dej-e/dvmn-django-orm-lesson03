@@ -1,12 +1,6 @@
-from .models import (
-    Schoolkid,
-    Mark,
-    Lesson,
-    Chastisement,
-    Commendation
-)
 import random
 
+from .models import Chastisement, Commendation, Lesson, Mark, Schoolkid
 
 COMMENDATIONS = [
     'Молодец!',
@@ -58,24 +52,24 @@ def remove_chastisements(schoolkid):
     chastisements.delete()
 
 
-def get_lessons(year, letter, subject_title):
+def get_lesson(year, letter, subject_title):
     return Lesson.objects.filter(
         year_of_study=year,
         group_letter=letter,
         subject__title=subject_title
-    )
+    ).order_by('-date').last()
 
 
-def create_commendation(child, subject):
-    schoolkid = get_child(child)
+def create_commendation(child_name, subject):
+    schoolkid = get_child(child_name)
 
-    lessons = get_lessons(
+    lesson = get_lesson(
         schoolkid.year_of_study,
         schoolkid.group_letter,
         subject
     )
 
-    for lesson in lessons:
+    if lesson is not None:
         Commendation.objects.create(
             text=random.choice(COMMENDATIONS),
             created=lesson.date,
