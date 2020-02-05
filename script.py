@@ -63,12 +63,11 @@ def get_lesson(year, letter, subject_title):
         year_of_study=year,
         group_letter=letter,
         subject__title=subject_title
-    ).order_by('-date').last()
+    ).order_by('date').first()
 
 
-def create_commendation(child_name, subject):
-    schoolkid = get_child(child_name)
-
+def create_commendation(schoolkid, subject):
+    
     lesson = get_lesson(
         schoolkid.year_of_study,
         schoolkid.group_letter,
