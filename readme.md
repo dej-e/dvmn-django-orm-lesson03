@@ -21,8 +21,8 @@
 ```
 $ python manage.py shell
 >>> from datacenter import script
->>> s = script.get_child('Фролов Иван')
->>> s.full_name
+>>> schoolkid = script.get_child('Фролов Иван')
+>>> schoolkid.full_name
 'Фролов Иван Григорьевич'
 >>> fix_mark(s)
 >>>
