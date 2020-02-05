@@ -1,5 +1,7 @@
 import random
 
+from django.core.exceptions import ObjectDoesNotExist
+
 from .models import Chastisement, Commendation, Lesson, Mark, Schoolkid
 
 COMMENDATIONS = [
@@ -37,7 +39,11 @@ COMMENDATIONS = [
 
 
 def get_child(child_name):
-    return Schoolkid.objects.get(full_name__contains=child_name)
+    try:
+        return Schoolkid.objects.get(full_name__contains=child_name)
+    except ObjectDoesNotExist
+        print(f'Школьника с именем {child_name} нет в базе')
+    
 
 
 def fix_mark(schoolkid):
