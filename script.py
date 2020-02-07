@@ -1,6 +1,6 @@
 import random
 
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 from .models import Chastisement, Commendation, Lesson, Mark, Schoolkid
 
@@ -41,8 +41,10 @@ COMMENDATIONS = [
 def get_child(child_name):
     try:
         return Schoolkid.objects.get(full_name__contains=child_name)
-    except ObjectDoesNotExist
+    except ObjectDoesNotExist:
         print(f'Школьника с именем {child_name} нет в базе')
+    except MultipleObjectsReturned:
+        print(f'Уточните имя школьника, школьников с {child_name} больше одного')
     
 
 
@@ -74,7 +76,7 @@ def create_commendation(schoolkid, subject):
         subject
     )
 
-    if lesson is not None:
+    if lesson:
         Commendation.objects.create(
             text=random.choice(COMMENDATIONS),
             created=lesson.date,
